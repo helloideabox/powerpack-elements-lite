@@ -73,6 +73,38 @@ abstract class Module_Base {
 		$this->reflection = new \ReflectionClass( $this );
 
 		add_action( 'elementor/widgets/widgets_registered', [ $this, 'init_widgets' ] );
+		add_action( 'ppe_after_content_conrols', [ $this, 'register_content_upgrade_controls' ] );
+	}
+
+	/**
+	 * Register PowerPack Upgrade Controls in Content tab
+	 *
+	 * @since x.x.x
+	 *
+	 * @return void
+	 */
+	public function register_content_upgrade_controls( $widget ) {
+		if ( ! is_pp_elements_active() ) {
+			$widget->start_controls_section(
+				'section_upgrade_powerpack',
+				array(
+					'label' => apply_filters( 'upgrade_powerpack_title', __( 'Get PowerPack Pro', 'powerpack' ) ),
+					'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+				)
+			);
+
+			$widget->add_control(
+				'upgrade_powerpack_notice',
+				array(
+					'label'           => '',
+					'type'            => \Elementor\Controls_Manager::RAW_HTML,
+					'raw'             => apply_filters( 'upgrade_powerpack_message', sprintf( __( 'Upgrade to %1$s Pro Version %2$s for 70+ widgets, exciting extensions and advanced features.', 'powerpack' ), '<a href="#" target="_blank" rel="noopener">', '</a>' ) ),
+					'content_classes' => 'upgrade-powerpack-notice elementor-panel-alert elementor-panel-alert-info',
+				)
+			);
+
+			$widget->end_controls_section();
+		}
 	}
 
 	public function init_widgets() {
