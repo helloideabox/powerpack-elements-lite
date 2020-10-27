@@ -395,7 +395,7 @@ class PP_Templates_Lib {
 		?>
 		<script type="text/template" id="tmpl-elementor-template-library-header-actions-pp">
 			<div id="elementor-template-library-header-sync" class="elementor-templates-modal__header__item">
-				<i class="eicon-sync" aria-hidden="true" title="<?php esc_attr_e( 'Sync Templates', 'elementor' ); ?>"></i>
+				<i class="eicon-sync" aria-hidden="true" title="<?php esc_attr_e( 'Sync Templates', 'powerpack' ); ?>"></i>
 				<span class="elementor-screen-only"><?php echo esc_html__( 'Sync Templates', 'powerpack' ); ?></span>
 			</div>
 		</script>
@@ -419,7 +419,7 @@ class PP_Templates_Lib {
 					var activeType = pp_templates_lib.templates.getFilter('type');
 					#>
 					<div id="elementor-template-library-filter-toolbar-remote" class="elementor-template-library-filter-toolbar">
-						<# if ( 'page' === activeType ) { #>
+						<# if ( 'new_page' === activeType ) { #>
 							<div id="elementor-template-library-order">
 								<input type="radio" id="elementor-template-library-order-new" class="elementor-template-library-order-input" name="elementor-template-library-order" value="date">
 								<label for="elementor-template-library-order-new" class="elementor-template-library-order-label"><?php echo esc_html__( 'New', 'powerpack' ); ?></label>
