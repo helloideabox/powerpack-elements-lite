@@ -78,858 +78,855 @@ class Divider extends Powerpack_Widget {
 	 *
 	 * @access protected
 	 */
-	protected function _register_controls() {
+	protected function _register_controls() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
+		/* Content Tab */
+		$this->register_content_divider_controls();
+		do_action( 'ppe_after_content_conrols', $this );
 
-		/*
-		-----------------------------------------------------------------------------------*/
-		/*
-		  CONTENT TAB
-		/*-----------------------------------------------------------------------------------*/
+		/* Style Tab */
+		$this->register_style_divider_controls();
+		$this->register_style_text_controls();
+		$this->register_style_icon_controls();
+		$this->register_style_image_controls();
+	}
 
+	/*-----------------------------------------------------------------------------------*/
+	/*	CONTENT TAB
+	/*-----------------------------------------------------------------------------------*/
+
+	protected function register_content_divider_controls() {
 		/**
 		 * Content Tab: Divider
 		 */
 		$this->start_controls_section(
-			'section_buton',
-			array(
-				'label' => __( 'Divider', 'powerpack' ),
-			)
+			'section_divider',
+			[
+				'label'                 => __( 'Divider', 'powerpack' ),
+			]
 		);
 
 		$this->add_control(
 			'divider_type',
-			array(
-				'label'       => esc_html__( 'Type', 'powerpack' ),
-				'type'        => Controls_Manager::CHOOSE,
-				'label_block' => false,
-				'options'     => array(
-					'plain' => array(
-						'title' => esc_html__( 'Plain', 'powerpack' ),
-						'icon'  => 'fa fa-ellipsis-h',
-					),
-					'text'  => array(
-						'title' => esc_html__( 'Text', 'powerpack' ),
-						'icon'  => 'fa fa-file-text-o',
-					),
-					'icon'  => array(
-						'title' => esc_html__( 'Icon', 'powerpack' ),
-						'icon'  => 'fa fa-certificate',
-					),
-					'image' => array(
-						'title' => esc_html__( 'Image', 'powerpack' ),
-						'icon'  => 'fa fa-picture-o',
-					),
-				),
-				'default'     => 'plain',
-			)
+			[
+				'label'                 => esc_html__( 'Type', 'powerpack' ),
+				'type'                  => Controls_Manager::CHOOSE,
+				'label_block'           => false,
+				'options'               => [
+					'plain'        => [
+						'title'    => esc_html__( 'Plain', 'powerpack' ),
+						'icon'     => 'fa fa-ellipsis-h',
+					],
+					'text'         => [
+						'title'    => esc_html__( 'Text', 'powerpack' ),
+						'icon'     => 'fa fa-file-text-o',
+					],
+					'icon'         => [
+						'title'    => esc_html__( 'Icon', 'powerpack' ),
+						'icon'     => 'fa fa-certificate',
+					],
+					'image'        => [
+						'title'    => esc_html__( 'Image', 'powerpack' ),
+						'icon'     => 'fa fa-picture-o',
+					],
+				],
+				'default'               => 'plain',
+			]
 		);
 
 		$this->add_control(
 			'divider_direction',
-			array(
-				'label'     => __( 'Direction', 'powerpack' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'horizontal',
-				'options'   => array(
-					'horizontal' => __( 'Horizontal', 'powerpack' ),
-					'vertical'   => __( 'Vertical', 'powerpack' ),
-				),
-				'condition' => array(
-					'divider_type' => 'plain',
-				),
-			)
+			[
+				'label'                 => __( 'Direction', 'powerpack' ),
+				'type'                  => Controls_Manager::SELECT,
+				'default'               => 'horizontal',
+				'options'               => [
+					'horizontal'     => __( 'Horizontal', 'powerpack' ),
+					'vertical'       => __( 'Vertical', 'powerpack' ),
+				],
+				'condition'             => [
+					'divider_type'    => 'plain',
+				],
+			]
 		);
 
 		$this->add_control(
 			'divider_text',
-			array(
-				'label'     => __( 'Text', 'powerpack' ),
-				'type'      => Controls_Manager::TEXT,
-				'default'   => __( 'Divider Text', 'powerpack' ),
-				'condition' => array(
-					'divider_type' => 'text',
-				),
-			)
+			[
+				'label'                 => __( 'Text', 'powerpack' ),
+				'type'                  => Controls_Manager::TEXT,
+				'dynamic'               => [
+					'active'   => true,
+				],
+				'default'               => __( 'Divider Text', 'powerpack' ),
+				'condition'             => [
+					'divider_type'    => 'text',
+				],
+			]
 		);
 
 		$this->add_control(
 			'icon',
-			array(
-				'label'            => __( 'Icon', 'powerpack' ),
-				'type'             => Controls_Manager::ICONS,
-				'fa4compatibility' => 'divider_icon',
-				'default'          => array(
-					'value'   => 'fas fa-circle',
-					'library' => 'fa-solid',
-				),
-				'condition'        => array(
-					'divider_type' => 'icon',
-				),
-			)
+			[
+				'label'                 => __( 'Icon', 'powerpack' ),
+				'type'                  => Controls_Manager::ICONS,
+				'fa4compatibility'      => 'divider_icon',
+				'default'               => [
+					'value'     => 'fas fa-circle',
+					'library'   => 'fa-solid',
+				],
+				'condition'             => [
+					'divider_type'  => 'icon',
+				],
+			]
 		);
 
 		$this->add_control(
 			'text_html_tag',
-			array(
-				'label'     => __( 'HTML Tag', 'powerpack' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'span',
-				'options'   => array(
-					'h1'   => __( 'H1', 'powerpack' ),
-					'h2'   => __( 'H2', 'powerpack' ),
-					'h3'   => __( 'H3', 'powerpack' ),
-					'h4'   => __( 'H4', 'powerpack' ),
-					'h5'   => __( 'H5', 'powerpack' ),
-					'h6'   => __( 'H6', 'powerpack' ),
-					'div'  => __( 'div', 'powerpack' ),
-					'span' => __( 'span', 'powerpack' ),
-					'p'    => __( 'p', 'powerpack' ),
-				),
-				'condition' => array(
-					'divider_type' => 'text',
-				),
-			)
+			[
+				'label'                 => __( 'HTML Tag', 'powerpack' ),
+				'type'                  => Controls_Manager::SELECT,
+				'default'               => 'span',
+				'options'               => [
+					'h1'            => __( 'H1', 'powerpack' ),
+					'h2'            => __( 'H2', 'powerpack' ),
+					'h3'            => __( 'H3', 'powerpack' ),
+					'h4'            => __( 'H4', 'powerpack' ),
+					'h5'            => __( 'H5', 'powerpack' ),
+					'h6'            => __( 'H6', 'powerpack' ),
+					'div'           => __( 'div', 'powerpack' ),
+					'span'          => __( 'span', 'powerpack' ),
+					'p'             => __( 'p', 'powerpack' ),
+				],
+				'condition'             => [
+					'divider_type'    => 'text',
+				],
+			]
 		);
 
 		$this->add_control(
 			'divider_image',
-			array(
-				'label'     => __( 'Image', 'powerpack' ),
-				'type'      => Controls_Manager::MEDIA,
-				'default'   => array(
-					'url' => Utils::get_placeholder_image_src(),
-				),
-				'condition' => array(
-					'divider_type' => 'image',
-				),
-			)
+			[
+				'label'                 => __( 'Image', 'powerpack' ),
+				'type'                  => Controls_Manager::MEDIA,
+				'dynamic'               => [
+					'active'   => true,
+				],
+				'default'               => [
+					'url'           => Utils::get_placeholder_image_src(),
+				],
+				'condition'             => [
+					'divider_type'    => 'image',
+				],
+			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Image_Size::get_type(),
-			array(
-				'name'      => 'image', // Usage: `{name}_size` and `{name}_custom_dimension`, in this case `image_size` and `image_custom_dimension`.
-				'default'   => 'full',
-				'separator' => 'none',
-				'condition' => array(
-					'divider_type' => 'image',
-				),
-			)
+			[
+				'name'                  => 'image',
+				'default'               => 'full',
+				'separator'             => 'none',
+				'condition'             => [
+					'divider_type'    => 'image',
+				],
+			]
 		);
 
 		$this->add_responsive_control(
 			'align',
-			array(
-				'label'     => __( 'Alignment', 'powerpack' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'default'   => 'center',
-				'options'   => array(
-					'left'   => array(
-						'title' => __( 'Left', 'powerpack' ),
-						'icon'  => 'eicon-h-align-left',
-					),
-					'center' => array(
-						'title' => __( 'Center', 'powerpack' ),
-						'icon'  => 'eicon-h-align-center',
-					),
-					'right'  => array(
-						'title' => __( 'Right', 'powerpack' ),
-						'icon'  => 'eicon-h-align-right',
-					),
-				),
-				'selectors' => array(
-					'{{WRAPPER}}' => 'text-align: {{VALUE}};',
-				),
-			)
+			[
+				'label'                 => __( 'Alignment', 'powerpack' ),
+				'type'                  => Controls_Manager::CHOOSE,
+				'default'               => 'center',
+				'options'               => [
+					'left'          => [
+						'title'     => __( 'Left', 'powerpack' ),
+						'icon'      => 'eicon-h-align-left',
+					],
+					'center'        => [
+						'title'     => __( 'Center', 'powerpack' ),
+						'icon'      => 'eicon-h-align-center',
+					],
+					'right'         => [
+						'title'     => __( 'Right', 'powerpack' ),
+						'icon'      => 'eicon-h-align-right',
+					],
+				],
+				'selectors'             => [
+					'{{WRAPPER}}'   => 'text-align: {{VALUE}};',
+				],
+			]
 		);
 
 		$this->end_controls_section();
+	}
 
-		if ( ! is_pp_elements_active() ) {
-			$this->start_controls_section(
-				'section_upgrade_powerpack',
-				array(
-					'label' => apply_filters( 'upgrade_powerpack_title', __( 'Get PowerPack Pro', 'powerpack' ) ),
-					'tab'   => Controls_Manager::TAB_CONTENT,
-				)
-			);
+	/*-----------------------------------------------------------------------------------*/
+	/*	STYLE TAB
+	/*-----------------------------------------------------------------------------------*/
 
-			$this->add_control(
-				'upgrade_powerpack_notice',
-				array(
-					'label'           => '',
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => apply_filters( 'upgrade_powerpack_message', sprintf( __( 'Upgrade to %1$s Pro Version %2$s for 70+ widgets, exciting extensions and advanced features.', 'powerpack' ), '<a href="#" target="_blank" rel="noopener">', '</a>' ) ),
-					'content_classes' => 'upgrade-powerpack-notice elementor-panel-alert elementor-panel-alert-info',
-				)
-			);
-
-			$this->end_controls_section();
-		}
-
-		/*
-		-----------------------------------------------------------------------------------*/
-		/*
-		  STYLE TAB
-		/*-----------------------------------------------------------------------------------*/
-
+	protected function register_style_divider_controls() {
 		/**
 		 * Style Tab: Divider
 		 */
 		$this->start_controls_section(
 			'section_divider_style',
-			array(
-				'label' => __( 'Divider', 'powerpack' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			)
+			[
+				'label'                 => __( 'Divider', 'powerpack' ),
+				'tab'                   => Controls_Manager::TAB_STYLE,
+			]
 		);
 
 		$this->add_control(
 			'divider_vertical_align',
-			array(
-				'label'                => __( 'Vertical Alignment', 'powerpack' ),
-				'type'                 => Controls_Manager::CHOOSE,
-				'label_block'          => false,
-				'default'              => 'middle',
-				'options'              => array(
-					'top'    => array(
-						'title' => __( 'Top', 'powerpack' ),
-						'icon'  => 'eicon-v-align-top',
-					),
-					'middle' => array(
-						'title' => __( 'Center', 'powerpack' ),
-						'icon'  => 'eicon-v-align-middle',
-					),
-					'bottom' => array(
-						'title' => __( 'Bottom', 'powerpack' ),
-						'icon'  => 'eicon-v-align-bottom',
-					),
-				),
-				'selectors'            => array(
-					'{{WRAPPER}} .divider-text-wrap' => 'align-items: {{VALUE}};',
-				),
-				'selectors_dictionary' => array(
-					'top'    => 'flex-start',
-					'middle' => 'center',
-					'bottom' => 'flex-end',
-				),
-				'condition'            => array(
-					'divider_type!' => 'plain',
-				),
-			)
+			[
+				'label'                 => __( 'Vertical Alignment', 'powerpack' ),
+				'type'                  => Controls_Manager::CHOOSE,
+				'label_block'           => false,
+				'default'               => 'middle',
+				'options'               => [
+					'top'          => [
+						'title'    => __( 'Top', 'powerpack' ),
+						'icon'     => 'eicon-v-align-top',
+					],
+					'middle'       => [
+						'title'    => __( 'Center', 'powerpack' ),
+						'icon'     => 'eicon-v-align-middle',
+					],
+					'bottom'       => [
+						'title'    => __( 'Bottom', 'powerpack' ),
+						'icon'     => 'eicon-v-align-bottom',
+					],
+				],
+				'selectors'             => [
+					'{{WRAPPER}} .divider-text-wrap'   => 'align-items: {{VALUE}};',
+				],
+				'selectors_dictionary'  => [
+					'top'          => 'flex-start',
+					'middle'       => 'center',
+					'bottom'       => 'flex-end',
+				],
+				'condition'             => [
+					'divider_type!'   => 'plain',
+				],
+			]
 		);
 
 		$this->add_control(
 			'divider_style',
-			array(
-				'label'     => __( 'Style', 'powerpack' ),
-				'type'      => Controls_Manager::SELECT,
-				'default'   => 'dashed',
-				'options'   => array(
-					'solid'  => __( 'Solid', 'powerpack' ),
-					'dashed' => __( 'Dashed', 'powerpack' ),
-					'dotted' => __( 'Dotted', 'powerpack' ),
-					'double' => __( 'Double', 'powerpack' ),
-				),
-				'selectors' => array(
+			[
+				'label'                 => __( 'Style', 'powerpack' ),
+				'type'                  => Controls_Manager::SELECT,
+				'default'               => 'dashed',
+				'options'               => [
+					'solid'          => __( 'Solid', 'powerpack' ),
+					'dashed'         => __( 'Dashed', 'powerpack' ),
+					'dotted'         => __( 'Dotted', 'powerpack' ),
+					'double'         => __( 'Double', 'powerpack' ),
+				],
+				'selectors'             => [
 					'{{WRAPPER}} .pp-divider, {{WRAPPER}} .divider-border' => 'border-style: {{VALUE}};',
-				),
-			)
+				],
+			]
 		);
 
 		$this->add_responsive_control(
 			'horizontal_height',
-			array(
-				'label'          => __( 'Height', 'powerpack' ),
-				'type'           => Controls_Manager::SLIDER,
-				'size_units'     => array( 'px' ),
-				'range'          => array(
-					'px' => array(
-						'min' => 1,
-						'max' => 60,
-					),
-				),
-				'default'        => array(
-					'size' => 3,
-					'unit' => 'px',
-				),
-				'tablet_default' => array(
-					'unit' => 'px',
-				),
-				'mobile_default' => array(
-					'unit' => 'px',
-				),
-				'selectors'      => array(
+			[
+				'label'                 => __( 'Height', 'powerpack' ),
+				'type'                  => Controls_Manager::SLIDER,
+				'size_units'            => [ 'px' ],
+				'range'                 => [
+					'px'       => [
+						'min'  => 1,
+						'max'  => 60,
+					],
+				],
+				'default'               => [
+					'size'     => 3,
+					'unit'     => 'px',
+				],
+				'tablet_default'    => [
+					'unit'     => 'px',
+				],
+				'mobile_default'    => [
+					'unit'     => 'px',
+				],
+				'selectors'             => [
 					'{{WRAPPER}} .pp-divider.horizontal' => 'border-bottom-width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .pp-divider.pp-divider-horizontal' => 'border-bottom-width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .divider-border'        => 'border-top-width: {{SIZE}}{{UNIT}};',
-				),
-				'conditions'     => array(
+					'{{WRAPPER}} .divider-border' => 'border-top-width: {{SIZE}}{{UNIT}};',
+				],
+				'conditions' => [
 					'relation' => 'or',
-					'terms'    => array(
-						array(
+					'terms' => [
+						[
 							'relation' => 'and',
-							'terms'    => array(
-								array(
-									'name'     => 'divider_type',
+							'terms' => [
+								[
+									'name' => 'divider_type',
 									'operator' => '==',
-									'value'    => 'plain',
-								),
-								array(
-									'name'     => 'divider_direction',
+									'value' => 'plain',
+								],
+								[
+									'name' => 'divider_direction',
 									'operator' => '==',
-									'value'    => 'horizontal',
-								),
-							),
-						),
-						array(
-							'name'     => 'divider_type',
+									'value' => 'horizontal',
+								],
+							],
+						],
+						[
+							'name' => 'divider_type',
 							'operator' => '!=',
-							'value'    => 'plain',
-						),
-					),
-				),
-			)
+							'value' => 'plain',
+						],
+					],
+				],
+			]
 		);
 
 		$this->add_responsive_control(
 			'vertical_height',
-			array(
-				'label'          => __( 'Height', 'powerpack' ),
-				'type'           => Controls_Manager::SLIDER,
-				'size_units'     => array( '%', 'px' ),
-				'range'          => array(
-					'px' => array(
-						'min' => 1,
-						'max' => 500,
-					),
-					'%'  => array(
-						'min' => 1,
-						'max' => 100,
-					),
-				),
-				'default'        => array(
-					'size' => 80,
-					'unit' => 'px',
-				),
-				'tablet_default' => array(
-					'unit' => 'px',
-				),
-				'mobile_default' => array(
-					'unit' => 'px',
-				),
-				'selectors'      => array(
+			[
+				'label'                 => __( 'Height', 'powerpack' ),
+				'type'                  => Controls_Manager::SLIDER,
+				'size_units'            => [ '%', 'px' ],
+				'range'                 => [
+					'px'           => [
+						'min'      => 1,
+						'max'      => 500,
+					],
+					'%'           => [
+						'min'      => 1,
+						'max'      => 100,
+					],
+				],
+				'default'               => [
+					'size'         => 80,
+					'unit'         => 'px',
+				],
+				'tablet_default'   => [
+					'unit'         => 'px',
+				],
+				'mobile_default'   => [
+					'unit'         => 'px',
+				],
+				'selectors'             => [
 					'{{WRAPPER}} .pp-divider.vertical' => 'padding-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .pp-divider.pp-divider-vertical' => 'padding-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .divider-border'      => 'border-top-width: {{SIZE}}{{UNIT}};',
-				),
-				'condition'      => array(
+					'{{WRAPPER}} .divider-border' => 'border-top-width: {{SIZE}}{{UNIT}};',
+				],
+				'condition'             => [
 					'divider_type'      => 'plain',
 					'divider_direction' => 'vertical',
-				),
-			)
+				],
+			]
 		);
 
 		$this->add_responsive_control(
 			'horizontal_width',
-			array(
-				'label'          => __( 'Width', 'powerpack' ),
-				'type'           => Controls_Manager::SLIDER,
-				'size_units'     => array( '%', 'px' ),
-				'range'          => array(
-					'px' => array(
-						'min' => 1,
-						'max' => 1200,
-					),
-				),
-				'default'        => array(
-					'size' => 300,
-					'unit' => 'px',
-				),
-				'tablet_default' => array(
-					'unit' => 'px',
-				),
-				'mobile_default' => array(
-					'unit' => 'px',
-				),
-				'selectors'      => array(
-					'{{WRAPPER}} .pp-divider.horizontal'  => 'width: {{SIZE}}{{UNIT}};',
+			[
+				'label'                 => __( 'Width', 'powerpack' ),
+				'type'                  => Controls_Manager::SLIDER,
+				'size_units'            => [ '%', 'px' ],
+				'range'                 => [
+					'px'           => [
+						'min'      => 1,
+						'max'      => 1200,
+					],
+				],
+				'default'               => [
+					'size'         => 300,
+					'unit'         => 'px',
+				],
+				'tablet_default'   => [
+					'unit'         => 'px',
+				],
+				'mobile_default'   => [
+					'unit'         => 'px',
+				],
+				'selectors'             => [
+					'{{WRAPPER}} .pp-divider.horizontal' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .pp-divider.pp-divider-horizontal' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .divider-text-container' => 'width: {{SIZE}}{{UNIT}};',
-				),
-				'conditions'     => array(
+				],
+				'conditions' => [
 					'relation' => 'or',
-					'terms'    => array(
-						array(
+					'terms' => [
+						[
 							'relation' => 'and',
-							'terms'    => array(
-								array(
-									'name'     => 'divider_type',
+							'terms' => [
+								[
+									'name' => 'divider_type',
 									'operator' => '==',
-									'value'    => 'plain',
-								),
-								array(
-									'name'     => 'divider_direction',
+									'value' => 'plain',
+								],
+								[
+									'name' => 'divider_direction',
 									'operator' => '==',
-									'value'    => 'horizontal',
-								),
-							),
-						),
-						array(
-							'name'     => 'divider_type',
+									'value' => 'horizontal',
+								],
+							],
+						],
+						[
+							'name' => 'divider_type',
 							'operator' => '!=',
-							'value'    => 'plain',
-						),
-					),
-				),
-			)
+							'value' => 'plain',
+						],
+					],
+				],
+			]
 		);
 
 		$this->add_responsive_control(
 			'vertical_width',
-			array(
-				'label'          => __( 'Width', 'powerpack' ),
-				'type'           => Controls_Manager::SLIDER,
-				'size_units'     => array( 'px' ),
-				'range'          => array(
-					'px' => array(
-						'min' => 1,
-						'max' => 100,
-					),
-				),
-				'default'        => array(
-					'size' => 3,
-					'unit' => 'px',
-				),
-				'tablet_default' => array(
-					'unit' => 'px',
-				),
-				'mobile_default' => array(
-					'unit' => 'px',
-				),
-				'selectors'      => array(
-					'{{WRAPPER}} .pp-divider.vertical'    => 'border-left-width: {{SIZE}}{{UNIT}};',
+			[
+				'label'                 => __( 'Width', 'powerpack' ),
+				'type'                  => Controls_Manager::SLIDER,
+				'size_units'            => [ 'px' ],
+				'range'                 => [
+					'px'           => [
+						'min'      => 1,
+						'max'      => 100,
+					],
+				],
+				'default'               => [
+					'size'         => 3,
+					'unit'         => 'px',
+				],
+				'tablet_default'   => [
+					'unit'         => 'px',
+				],
+				'mobile_default'   => [
+					'unit'         => 'px',
+				],
+				'selectors'             => [
+					'{{WRAPPER}} .pp-divider.vertical' => 'border-left-width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .pp-divider.pp-divider-vertical' => 'border-left-width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .divider-text-container' => 'width: {{SIZE}}{{UNIT}};',
-				),
-				'condition'      => array(
+				],
+				'condition'             => [
 					'divider_type'      => 'plain',
 					'divider_direction' => 'vertical',
-				),
-			)
+				],
+			]
 		);
 
 		$this->add_control(
 			'divider_border_color',
-			array(
-				'label'     => __( 'Divider Color', 'powerpack' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'selectors' => array(
+			[
+				'label'                 => __( 'Divider Color', 'powerpack' ),
+				'type'                  => Controls_Manager::COLOR,
+				'default'               => '',
+				'selectors'             => [
 					'{{WRAPPER}} .pp-divider, {{WRAPPER}} .divider-border' => 'border-color: {{VALUE}};',
-				),
-				'condition' => array(
-					'divider_type' => 'plain',
-				),
-			)
+				],
+				'condition'             => [
+					'divider_type'    => 'plain',
+				],
+			]
 		);
 
 		$this->start_controls_tabs( 'tabs_before_after_style' );
 
 		$this->start_controls_tab(
 			'tab_before_style',
-			array(
-				'label'     => __( 'Before', 'powerpack' ),
-				'condition' => array(
-					'divider_type!' => 'plain',
-				),
-			)
+			[
+				'label'                 => __( 'Before', 'powerpack' ),
+				'condition'             => [
+					'divider_type!'   => 'plain',
+				],
+			]
 		);
 
 		$this->add_control(
 			'divider_before_color',
-			array(
-				'label'     => __( 'Divider Color', 'powerpack' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'condition' => array(
-					'divider_type!' => 'plain',
-				),
-				'selectors' => array(
+			[
+				'label'                 => __( 'Divider Color', 'powerpack' ),
+				'type'                  => Controls_Manager::COLOR,
+				'default'               => '',
+				'condition'             => [
+					'divider_type!'   => 'plain',
+				],
+				'selectors'             => [
 					'{{WRAPPER}} .divider-border-left .divider-border' => 'border-color: {{VALUE}};',
-				),
-			)
+				],
+			]
 		);
 
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
 			'tab_after_style',
-			array(
-				'label'     => __( 'After', 'powerpack' ),
-				'condition' => array(
-					'divider_type!' => 'plain',
-				),
-			)
+			[
+				'label'                 => __( 'After', 'powerpack' ),
+				'condition'             => [
+					'divider_type!'   => 'plain',
+				],
+			]
 		);
 
 		$this->add_control(
 			'divider_after_color',
-			array(
-				'label'     => __( 'Divider Color', 'powerpack' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'condition' => array(
-					'divider_type!' => 'plain',
-				),
-				'selectors' => array(
+			[
+				'label'                 => __( 'Divider Color', 'powerpack' ),
+				'type'                  => Controls_Manager::COLOR,
+				'default'               => '',
+				'condition'             => [
+					'divider_type!'   => 'plain',
+				],
+				'selectors'             => [
 					'{{WRAPPER}} .divider-border-right .divider-border' => 'border-color: {{VALUE}};',
-				),
-			)
+				],
+			]
 		);
 
 		$this->end_controls_tab();
-
 		$this->end_controls_tabs();
 
 		$this->end_controls_section();
+	}
 
-		/**
-		 * Style Tab: Text
-		 */
+	/**
+	 * Style Tab: Text
+	 */
+	protected function register_style_text_controls() {
 		$this->start_controls_section(
 			'section_text_style',
-			array(
-				'label'     => __( 'Text', 'powerpack' ),
-				'tab'       => Controls_Manager::TAB_STYLE,
-				'condition' => array(
-					'divider_type' => 'text',
-				),
-			)
+			[
+				'label'                 => __( 'Text', 'powerpack' ),
+				'tab'                   => Controls_Manager::TAB_STYLE,
+				'condition'             => [
+					'divider_type'    => 'text',
+				],
+			]
 		);
 
 		$this->add_control(
 			'text_position',
-			array(
-				'label'        => __( 'Position', 'powerpack' ),
-				'type'         => Controls_Manager::CHOOSE,
-				'options'      => array(
-					'left'   => array(
-						'title' => __( 'Left', 'powerpack' ),
-						'icon'  => 'eicon-h-align-left',
-					),
-					'center' => array(
-						'title' => __( 'Center', 'powerpack' ),
-						'icon'  => 'eicon-h-align-center',
-					),
-					'right'  => array(
-						'title' => __( 'Right', 'powerpack' ),
-						'icon'  => 'eicon-h-align-right',
-					),
-				),
-				'default'      => 'center',
-				'prefix_class' => 'pp-divider-',
-			)
+			[
+				'label'                 => __( 'Position', 'powerpack' ),
+				'type'                  => Controls_Manager::CHOOSE,
+				'options'               => [
+					'left'         => [
+						'title'    => __( 'Left', 'powerpack' ),
+						'icon'     => 'eicon-h-align-left',
+					],
+					'center'       => [
+						'title'    => __( 'Center', 'powerpack' ),
+						'icon'     => 'eicon-h-align-center',
+					],
+					'right'        => [
+						'title'    => __( 'Right', 'powerpack' ),
+						'icon'     => 'eicon-h-align-right',
+					],
+				],
+				'default'               => 'center',
+				'prefix_class'          => 'pp-divider-',
+			]
 		);
 
 		$this->add_control(
 			'divider_text_color',
-			array(
-				'label'     => __( 'Color', 'powerpack' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'condition' => array(
-					'divider_type' => 'text',
-				),
-				'selectors' => array(
+			[
+				'label'                 => __( 'Color', 'powerpack' ),
+				'type'                  => Controls_Manager::COLOR,
+				'default'               => '',
+				'condition'             => [
+					'divider_type'    => 'text',
+				],
+				'selectors'             => [
 					'{{WRAPPER}} .pp-divider-text' => 'color: {{VALUE}};',
-				),
-			)
+				],
+			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
-			array(
-				'name'      => 'typography',
-				'label'     => __( 'Typography', 'powerpack' ),
-				'scheme'    => Scheme_Typography::TYPOGRAPHY_4,
-				'selector'  => '{{WRAPPER}} .pp-divider-text',
-				'condition' => array(
-					'divider_type' => 'text',
-				),
-			)
+			[
+				'name'                  => 'typography',
+				'label'                 => __( 'Typography', 'powerpack' ),
+				'scheme'                => Scheme_Typography::TYPOGRAPHY_4,
+				'selector'              => '{{WRAPPER}} .pp-divider-text',
+				'condition'             => [
+					'divider_type'    => 'text',
+				],
+			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
-			array(
-				'name'     => 'divider_text_shadow',
-				'selector' => '{{WRAPPER}} .pp-divider-text',
-			)
+			[
+				'name'                  => 'divider_text_shadow',
+				'selector'              => '{{WRAPPER}} .pp-divider-text',
+			]
 		);
 
 		$this->add_responsive_control(
 			'text_spacing',
-			array(
-				'label'      => __( 'Spacing', 'powerpack' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( '%', 'px' ),
-				'range'      => array(
-					'px' => array(
+			[
+				'label'                 => __( 'Spacing', 'powerpack' ),
+				'type'                  => Controls_Manager::SLIDER,
+				'size_units'            => [ '%', 'px' ],
+				'range'                 => [
+					'px' => [
 						'max' => 200,
-					),
-				),
-				'condition'  => array(
-					'divider_type' => 'text',
-				),
-				'selectors'  => array(
+					],
+				],
+				'condition'             => [
+					'divider_type'    => 'text',
+				],
+				'selectors'             => [
 					'{{WRAPPER}}.pp-divider-center .pp-divider-content' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.pp-divider-left .pp-divider-content' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.pp-divider-right .pp-divider-content' => 'margin-left: {{SIZE}}{{UNIT}};',
-				),
-			)
+					'{{WRAPPER}}.pp-divider-left .pp-divider-content' => 'margin-left: 0; margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.pp-divider-right .pp-divider-content' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: 0;',
+				],
+			]
 		);
 
 		$this->end_controls_section();
+	}
 
-		/**
-		 * Style Tab: Icon
-		 */
+	/**
+	 * Style Tab: Icon
+	 */
+	protected function register_style_icon_controls() {
 		$this->start_controls_section(
 			'section_icon_style',
-			array(
-				'label'     => __( 'Icon', 'powerpack' ),
-				'tab'       => Controls_Manager::TAB_STYLE,
-				'condition' => array(
-					'divider_type' => 'icon',
-				),
-			)
+			[
+				'label'                 => __( 'Icon', 'powerpack' ),
+				'tab'                   => Controls_Manager::TAB_STYLE,
+				'condition'             => [
+					'divider_type'    => 'icon',
+				],
+			]
 		);
 
 		$this->add_control(
 			'icon_position',
-			array(
-				'label'        => __( 'Position', 'powerpack' ),
-				'type'         => Controls_Manager::CHOOSE,
-				'options'      => array(
-					'left'   => array(
-						'title' => __( 'Left', 'powerpack' ),
-						'icon'  => 'eicon-h-align-left',
-					),
-					'center' => array(
-						'title' => __( 'Center', 'powerpack' ),
-						'icon'  => 'eicon-h-align-center',
-					),
-					'right'  => array(
-						'title' => __( 'Right', 'powerpack' ),
-						'icon'  => 'eicon-h-align-right',
-					),
-				),
-				'default'      => 'center',
-				'prefix_class' => 'pp-divider-',
-			)
+			[
+				'label'                 => __( 'Position', 'powerpack' ),
+				'type'                  => Controls_Manager::CHOOSE,
+				'options'               => [
+					'left'         => [
+						'title'    => __( 'Left', 'powerpack' ),
+						'icon'     => 'eicon-h-align-left',
+					],
+					'center'       => [
+						'title'    => __( 'Center', 'powerpack' ),
+						'icon'     => 'eicon-h-align-center',
+					],
+					'right'        => [
+						'title'    => __( 'Right', 'powerpack' ),
+						'icon'     => 'eicon-h-align-right',
+					],
+				],
+				'default'               => 'center',
+				'prefix_class'          => 'pp-divider-',
+			]
 		);
 
 		$this->add_control(
 			'divider_icon_color',
-			array(
-				'label'     => __( 'Color', 'powerpack' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'condition' => array(
-					'divider_type' => 'icon',
-				),
-				'selectors' => array(
-					'{{WRAPPER}} .pp-divider-icon'     => 'color: {{VALUE}};',
+			[
+				'label'                 => __( 'Color', 'powerpack' ),
+				'type'                  => Controls_Manager::COLOR,
+				'default'               => '',
+				'condition'             => [
+					'divider_type'    => 'icon',
+				],
+				'selectors'             => [
+					'{{WRAPPER}} .pp-divider-icon' => 'color: {{VALUE}};',
 					'{{WRAPPER}} .pp-divider-icon svg' => 'fill: {{VALUE}};',
-				),
-			)
+				],
+			]
 		);
 
 		$this->add_responsive_control(
 			'icon_size',
-			array(
-				'label'      => __( 'Size', 'powerpack' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( '%', 'px' ),
-				'range'      => array(
-					'px' => array(
+			[
+				'label'                 => __( 'Size', 'powerpack' ),
+				'type'                  => Controls_Manager::SLIDER,
+				'size_units'            => [ '%', 'px' ],
+				'range'                 => [
+					'px' => [
 						'max' => 100,
-					),
-				),
-				'default'    => array(
+					],
+				],
+				'default'               => [
 					'size' => 16,
 					'unit' => 'px',
-				),
-				'condition'  => array(
-					'divider_type' => 'icon',
-				),
-				'selectors'  => array(
+				],
+				'condition'             => [
+					'divider_type'    => 'icon',
+				],
+				'selectors'             => [
 					'{{WRAPPER}} .pp-divider-icon' => 'font-size: {{SIZE}}{{UNIT}};',
-				),
-			)
+				],
+			]
 		);
 
 		$this->add_responsive_control(
 			'icon_rotation',
-			array(
-				'label'          => __( 'Icon Rotation', 'powerpack' ),
-				'type'           => Controls_Manager::SLIDER,
-				'size_units'     => array( '%', 'px' ),
-				'range'          => array(
-					'px' => array(
+			[
+				'label'                 => __( 'Icon Rotation', 'powerpack' ),
+				'type'                  => Controls_Manager::SLIDER,
+				'size_units'            => [ '%', 'px' ],
+				'range'                 => [
+					'px' => [
 						'max' => 360,
-					),
-				),
-				'default'        => array(
+					],
+				],
+				'default'               => [
 					'unit' => 'px',
-				),
-				'tablet_default' => array(
+				],
+				'tablet_default'    => [
 					'unit' => 'px',
-				),
-				'mobile_default' => array(
+				],
+				'mobile_default'    => [
 					'unit' => 'px',
-				),
-				'selectors'      => array(
+				],
+				'selectors'             => [
 					'{{WRAPPER}} .pp-divider-icon .fa' => 'transform: rotate( {{SIZE}}deg );',
-				),
-				'condition'      => array(
-					'divider_type' => 'icon',
-				),
-			)
+				],
+				'condition'             => [
+					'divider_type'    => 'icon',
+				],
+			]
 		);
 
 		$this->add_responsive_control(
 			'icon_spacing',
-			array(
-				'label'      => __( 'Spacing', 'powerpack' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( '%', 'px' ),
-				'range'      => array(
-					'px' => array(
+			[
+				'label'                 => __( 'Spacing', 'powerpack' ),
+				'type'                  => Controls_Manager::SLIDER,
+				'size_units'            => [ '%', 'px' ],
+				'range'                 => [
+					'px' => [
 						'max' => 200,
-					),
-				),
-				'condition'  => array(
-					'divider_type' => 'icon',
-				),
-				'selectors'  => array(
+					],
+				],
+				'condition'             => [
+					'divider_type'    => 'icon',
+				],
+				'selectors'             => [
 					'{{WRAPPER}}.pp-divider-center .pp-divider-content' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.pp-divider-left .pp-divider-content' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.pp-divider-right .pp-divider-content' => 'margin-left: {{SIZE}}{{UNIT}};',
-				),
-			)
+					'{{WRAPPER}}.pp-divider-left .pp-divider-content' => 'margin-left: 0; margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.pp-divider-right .pp-divider-content' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: 0;',
+				],
+			]
 		);
 
 		$this->end_controls_section();
+	}
 
-		/**
-		 * Style Tab: Image
-		 */
+	/**
+	 * Style Tab: Image
+	 */
+	protected function register_style_image_controls() {
 		$this->start_controls_section(
 			'section_image_style',
-			array(
-				'label'     => __( 'Image', 'powerpack' ),
-				'tab'       => Controls_Manager::TAB_STYLE,
-				'condition' => array(
-					'divider_type' => 'image',
-				),
-			)
+			[
+				'label'                 => __( 'Image', 'powerpack' ),
+				'tab'                   => Controls_Manager::TAB_STYLE,
+				'condition'             => [
+					'divider_type'    => 'image',
+				],
+			]
 		);
 
 		$this->add_control(
 			'image_position',
-			array(
-				'label'        => __( 'Position', 'powerpack' ),
-				'type'         => Controls_Manager::CHOOSE,
-				'options'      => array(
-					'left'   => array(
+			[
+				'label'                 => __( 'Position', 'powerpack' ),
+				'type'                  => Controls_Manager::CHOOSE,
+				'options'               => [
+					'left'      => [
 						'title' => __( 'Left', 'powerpack' ),
 						'icon'  => 'eicon-h-align-left',
-					),
-					'center' => array(
+					],
+					'center'    => [
 						'title' => __( 'Center', 'powerpack' ),
 						'icon'  => 'eicon-h-align-center',
-					),
-					'right'  => array(
+					],
+					'right'     => [
 						'title' => __( 'Right', 'powerpack' ),
 						'icon'  => 'eicon-h-align-right',
-					),
-				),
-				'default'      => 'center',
-				'prefix_class' => 'pp-divider-',
-			)
+					],
+				],
+				'default'               => 'center',
+				'prefix_class'          => 'pp-divider-',
+			]
 		);
 
 		$this->add_responsive_control(
 			'image_width',
-			array(
-				'label'          => __( 'Width', 'powerpack' ),
-				'type'           => Controls_Manager::SLIDER,
-				'size_units'     => array( '%', 'px' ),
-				'range'          => array(
-					'px' => array(
+			[
+				'label'                 => __( 'Width', 'powerpack' ),
+				'type'                  => Controls_Manager::SLIDER,
+				'size_units'            => [ '%', 'px' ],
+				'range'                 => [
+					'px' => [
 						'max' => 1200,
-					),
-				),
-				'default'        => array(
+					],
+				],
+				'default'               => [
 					'size' => 80,
 					'unit' => 'px',
-				),
-				'tablet_default' => array(
+				],
+				'tablet_default'    => [
 					'unit' => 'px',
-				),
-				'mobile_default' => array(
+				],
+				'mobile_default'    => [
 					'unit' => 'px',
-				),
-				'condition'      => array(
-					'divider_type' => 'image',
-				),
-				'selectors'      => array(
+				],
+				'condition'             => [
+					'divider_type'    => 'image',
+				],
+				'selectors'             => [
 					'{{WRAPPER}} .pp-divider-image' => 'width: {{SIZE}}{{UNIT}};',
-				),
-			)
+				],
+			]
 		);
 
 		$this->add_control(
 			'icon_border_radius',
-			array(
-				'label'      => __( 'Border Radius', 'powerpack' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => array( 'px', '%' ),
-				'condition'  => array(
-					'divider_type' => 'image',
-				),
-				'selectors'  => array(
+			[
+				'label'                 => __( 'Border Radius', 'powerpack' ),
+				'type'                  => Controls_Manager::DIMENSIONS,
+				'size_units'            => [ 'px', '%' ],
+				'condition'             => [
+					'divider_type'    => 'image',
+				],
+				'selectors'             => [
 					'{{WRAPPER}} .pp-divider-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				),
-			)
+				],
+			]
 		);
 
 		$this->add_responsive_control(
 			'image_spacing',
-			array(
-				'label'      => __( 'Spacing', 'powerpack' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => array( '%', 'px' ),
-				'range'      => array(
-					'px' => array(
+			[
+				'label'                 => __( 'Spacing', 'powerpack' ),
+				'type'                  => Controls_Manager::SLIDER,
+				'size_units'            => [ '%', 'px' ],
+				'range'                 => [
+					'px' => [
 						'max' => 200,
-					),
-				),
-				'condition'  => array(
-					'divider_type' => 'image',
-				),
-				'selectors'  => array(
+					],
+				],
+				'condition'             => [
+					'divider_type'    => 'image',
+				],
+				'selectors'             => [
 					'{{WRAPPER}}.pp-divider-center .pp-divider-content' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.pp-divider-left .pp-divider-content' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.pp-divider-right .pp-divider-content' => 'margin-left: {{SIZE}}{{UNIT}};',
-				),
-			)
+					'{{WRAPPER}}.pp-divider-left .pp-divider-content' => 'margin-left: 0; margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.pp-divider-right .pp-divider-content' => 'margin-left: {{SIZE}}{{UNIT}}; margin-right: 0;',
+				],
+			]
 		);
 
 		$this->end_controls_section();
-
 	}
 
 	/**
@@ -942,7 +939,7 @@ class Divider extends Powerpack_Widget {
 	protected function render() {
 		$settings = $this->get_settings();
 
-		$classes = array( 'pp-divider' );
+		$classes = [ 'pp-divider' ];
 
 		if ( $settings['divider_direction'] ) {
 			$classes[] = 'pp-divider-' . $settings['divider_direction'];
@@ -956,12 +953,12 @@ class Divider extends Powerpack_Widget {
 
 		$this->add_render_attribute( 'divider', 'class', $classes );
 
-		$this->add_render_attribute( 'divider-content', 'class', array( 'pp-divider-' . $settings['divider_type'], 'pp-icon' ) );
+		$this->add_render_attribute( 'divider-content', 'class', [ 'pp-divider-' . $settings['divider_type'], 'pp-icon' ] );
 
 		$this->add_inline_editing_attributes( 'divider_text', 'none' );
 		$this->add_render_attribute( 'divider_text', 'class', 'pp-divider-' . $settings['divider_type'] );
 
-		if ( $settings['divider_type'] == 'icon' ) {
+		if ( 'icon' === $settings['divider_type'] ) {
 			if ( ! isset( $settings['divider_icon'] ) && ! Icons_Manager::is_migration_allowed() ) {
 				// add old default
 				$settings['divider_icon'] = 'fa fa-circle';
@@ -980,42 +977,38 @@ class Divider extends Powerpack_Widget {
 				$has_icon = true;
 			}
 			$migrated = isset( $settings['__fa4_migrated']['icon'] );
-			$is_new   = ! isset( $settings['divider_icon'] ) && Icons_Manager::is_migration_allowed();
+			$is_new = ! isset( $settings['divider_icon'] ) && Icons_Manager::is_migration_allowed();
 		}
 		?>
 		<div class="pp-divider-wrap">
 			<?php
-			if ( $settings['divider_type'] == 'plain' ) {
-				?>
+			if ( 'plain' === $settings['divider_type'] ) { ?>
 				<div <?php echo $this->get_render_attribute_string( 'divider' ); ?>></div>
 				<?php
-			} else {
-				?>
+			} else { ?>
 				<div class="divider-text-container">
 					<div class="divider-text-wrap">
 						<span class="pp-divider-border-wrap divider-border-left">
 							<span class="divider-border"></span>
 						</span>
 						<span class="pp-divider-content">
-							<?php if ( $settings['divider_type'] == 'text' && $settings['divider_text'] ) { ?>
+							<?php if ( 'text' === $settings['divider_type'] && $settings['divider_text'] ) { ?>
 								<?php
 									printf( '<%1$s %2$s>%3$s</%1$s>', $settings['text_html_tag'], $this->get_render_attribute_string( 'divider_text' ), $settings['divider_text'] );
 								?>
-							<?php } elseif ( $settings['divider_type'] == 'icon' ) { ?>
+							<?php } elseif ( 'icon' === $settings['divider_type'] ) { ?>
 								<?php if ( ! empty( $settings['divider_icon'] ) || ( ! empty( $settings['icon']['value'] ) && $is_new ) ) { ?>
 									<span <?php echo $this->get_render_attribute_string( 'divider-content' ); ?>>
 										<?php
 										if ( $is_new || $migrated ) {
-											Icons_Manager::render_icon( $settings['icon'], array( 'aria-hidden' => 'true' ) );
+											Icons_Manager::render_icon( $settings['icon'], [ 'aria-hidden' => 'true' ] );
 										} elseif ( ! empty( $settings['divider_icon'] ) ) {
-											?>
-												<i <?php echo $this->get_render_attribute_string( 'i' ); ?>></i>
-												<?php
+											?><i <?php echo $this->get_render_attribute_string( 'i' ); ?>></i><?php
 										}
 										?>
 									</span>
 								<?php } ?>
-							<?php } elseif ( $settings['divider_type'] == 'image' ) { ?>
+							<?php } elseif ( 'image' === $settings['divider_type'] ) { ?>
 								<span <?php echo $this->get_render_attribute_string( 'divider-content' ); ?>>
 									<?php
 										$image = $settings['divider_image'];
@@ -1043,9 +1036,10 @@ class Divider extends Powerpack_Widget {
 	 *
 	 * Written as a Backbone JavaScript template and used to generate the live preview.
 	 *
+	 * @since x.x.x
 	 * @access protected
 	 */
-	protected function _content_template() {
+	protected function content_template() {
 		?>
 		<#
 		var iconHTML = elementor.helpers.renderIcon( view, settings.icon, { 'aria-hidden': true }, 'i' , 'object' ),
@@ -1099,5 +1093,19 @@ class Divider extends Powerpack_Widget {
 			<# } #>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Render divider widget output in the editor.
+	 *
+	 * Written as a Backbone JavaScript template and used to generate the live preview.
+	 *
+	 * Remove this after Elementor v3.3.0
+	 *
+	 * @since 1.0.0
+	 * @access protected
+	 */
+	protected function _content_template() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
+		$this->content_template();
 	}
 }

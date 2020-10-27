@@ -105,16 +105,27 @@ class Buttons extends Powerpack_Widget {
 	 * @access protected
 	 */
 	protected function register_controls() {
+		/* Content Tab */
+		$this->register_content_buttons_controls();
+		do_action( 'ppe_after_content_conrols', $this );
 
-		/*-----------------------------------------------------------------------------------*/
-		/*	CONTENT TAB
-		/*-----------------------------------------------------------------------------------*/
+		/* Style Tab */
+		$this->register_style_layout_controls();
+		$this->register_style_buttons_styling_controls();
+		$this->register_style_icon_controls();
+		$this->register_style_tooltip_controls();
+	}
 
+	/*-----------------------------------------------------------------------------------*/
+	/*	CONTENT TAB
+	/*-----------------------------------------------------------------------------------*/
+
+	protected function register_content_buttons_controls() {
 		/**
 		 * Content Tab: Buttons
 		 */
 		$this->start_controls_section(
-			'section_list',
+			'section_buttons',
 			[
 				'label'                 => __( 'Buttons', 'powerpack' ),
 			]
@@ -539,29 +550,13 @@ class Buttons extends Powerpack_Widget {
 			]
 		);
 		$this->end_controls_section();
+	}
 
-		if ( ! is_pp_elements_active() ) {
-			$this->start_controls_section(
-				'section_upgrade_powerpack',
-				array(
-					'label' => apply_filters( 'upgrade_powerpack_title', __( 'Get PowerPack Pro', 'powerpack' ) ),
-					'tab'   => Controls_Manager::TAB_CONTENT,
-				)
-			);
+	/*-----------------------------------------------------------------------------------*/
+	/*	STYLE TAB
+	/*-----------------------------------------------------------------------------------*/
 
-			$this->add_control(
-				'upgrade_powerpack_notice',
-				array(
-					'label'           => '',
-					'type'            => Controls_Manager::RAW_HTML,
-					'raw'             => apply_filters( 'upgrade_powerpack_message', sprintf( __( 'Upgrade to %1$s Pro Version %2$s for 70+ widgets, exciting extensions and advanced features.', 'powerpack' ), '<a href="#" target="_blank" rel="noopener">', '</a>' ) ),
-					'content_classes' => 'upgrade-powerpack-notice elementor-panel-alert elementor-panel-alert-info',
-				)
-			);
-
-			$this->end_controls_section();
-		}
-
+	protected function register_style_layout_controls() {
 		/**
 		 * Style Tab: Layout
 		 */
@@ -734,13 +729,15 @@ class Buttons extends Powerpack_Widget {
 		);
 
 		$this->end_controls_section();
+	}
 
-		/**
-		 * Style Tab: Styling
-		 * -------------------------------------------------
-		 */
+	/**
+	 * Style Tab: Styling
+	 * -------------------------------------------------
+	 */
+	protected function register_style_buttons_styling_controls() {
 		$this->start_controls_section(
-			'section_info_box_button_style',
+			'section_buttons_style',
 			[
 				'label'                 => __( 'Styling', 'powerpack' ),
 				'tab'                   => Controls_Manager::TAB_STYLE,
@@ -877,14 +874,15 @@ class Buttons extends Powerpack_Widget {
 			);
 
 		$this->end_controls_tab();
-
 		$this->end_controls_tabs();
 
 		$this->end_controls_section();
+	}
 
-		/**
-		 * Style Tab: Icon
-		 */
+	/**
+	 * Style Tab: Icon
+	 */
+	protected function register_style_icon_controls() {
 		$this->start_controls_section(
 			'section_icon_style',
 			[
@@ -1006,12 +1004,13 @@ class Buttons extends Powerpack_Widget {
 		$this->end_controls_tabs();
 
 		$this->end_controls_section();
+	}
 
-		/**
-		 * Style Tab: Tooltip
-		 * -------------------------------------------------
-		 */
-
+	/**
+	 * Style Tab: Tooltip
+	 * -------------------------------------------------
+	 */
+	protected function register_style_tooltip_controls() {
 		$this->start_controls_section(
 			'section_tooltip_style',
 			[

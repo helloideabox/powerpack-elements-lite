@@ -100,16 +100,29 @@ class Advanced_Accordion extends Powerpack_Widget {
 	 * @access protected
 	 */
 	protected function _register_controls() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore 
+		/* Content Tab */
+		$this->register_content_advanced_accordion_controls();
+		$this->register_content_toggle_icon_controls();
+		$this->register_content_settings_controls();
+		do_action( 'ppe_after_content_conrols', $this );
 
-		/*-----------------------------------------------------------------------------------*/
-		/*	CONTENT TAB
-		/*-----------------------------------------------------------------------------------*/
+		/* Style Tab */
+		$this->register_style_items_controls();
+		$this->register_style_title_controls();
+		$this->register_style_content_controls();
+		$this->register_style_toggle_icon_controls();
+	}
 
+	/*-----------------------------------------------------------------------------------*/
+	/*	CONTENT TAB
+	/*-----------------------------------------------------------------------------------*/
+
+	protected function register_content_advanced_accordion_controls() {
 		/**
 		 * Content Tab: Accordion
 		 */
 		$this->start_controls_section(
-			'section_accordion_tabs',
+			'section_advanced_accordion',
 			[
 				'label'                 => esc_html__( 'Accordion', 'powerpack' ),
 			]
@@ -297,7 +310,9 @@ class Advanced_Accordion extends Powerpack_Widget {
 		);
 
 		$this->end_controls_section();
+	}
 
+	protected function register_content_toggle_icon_controls() {
 		$this->start_controls_section(
 			'section_accordion_toggle_icon',
 			[
@@ -400,7 +415,9 @@ class Advanced_Accordion extends Powerpack_Widget {
 		);
 
 		$this->end_controls_section();
+	}
 
+	protected function register_content_settings_controls() {
 		$this->start_controls_section(
 			'section_accordion_settings',
 			[
@@ -453,33 +470,13 @@ class Advanced_Accordion extends Powerpack_Widget {
 		);
 
 		$this->end_controls_section();
+	}
 
-		if ( ! is_pp_elements_active() ) {
-			$this->start_controls_section(
-				'section_upgrade_powerpack',
-				array(
-					'label' => apply_filters( 'upgrade_powerpack_title', __( 'Get PowerPack Pro', 'powerpack' ) ),
-					'tab'   => Controls_Manager::TAB_CONTENT,
-				)
-			);
+	/*-----------------------------------------------------------------------------------*/
+	/*	STYLE TAB
+	/*-----------------------------------------------------------------------------------*/
 
-			$this->add_control(
-				'upgrade_powerpack_notice',
-				array(
-					'label'           => '',
-					'type'            => Controls_Manager::RAW_HTML,
-					// translators: %1$s opening link tag, %2$s closing link tag.
-					'raw'             => apply_filters( 'upgrade_powerpack_message', sprintf( __( 'Upgrade to %1$s Pro Version %2$s for 70+ widgets, exciting extensions and advanced features.', 'powerpack' ), '<a href="#" target="_blank" rel="noopener">', '</a>' ) ),
-					'content_classes' => 'upgrade-powerpack-notice elementor-panel-alert elementor-panel-alert-info',
-				)
-			);
-
-			$this->end_controls_section();
-		}
-
-		/**
-		 * Style Tab: Items
-		 */
+	protected function register_style_items_controls() {
 		$this->start_controls_section(
 			'section_accordion_items_style',
 			[
@@ -538,10 +535,12 @@ class Advanced_Accordion extends Powerpack_Widget {
 		);
 
 		$this->end_controls_section();
+	}
 
-		/**
-		 * Style Tab: Title
-		 */
+	/**
+	 * Style Tab: Title
+	 */
+	protected function register_style_title_controls() {
 		$this->start_controls_section(
 			'section_title_style',
 			[
@@ -765,10 +764,12 @@ class Advanced_Accordion extends Powerpack_Widget {
 		);
 
 		$this->end_controls_section();
+	}
 
-		/**
-		 * Style Tab: Content
-		 */
+	/**
+	 * Style Tab: Content
+	 */
+	protected function register_style_content_controls() {
 		$this->start_controls_section(
 			'section_content_style',
 			[
@@ -823,10 +824,12 @@ class Advanced_Accordion extends Powerpack_Widget {
 		);
 
 		$this->end_controls_section();
+	}
 
-		/**
-		 * Style tab: Toggle Icon
-		 */
+	/**
+	 * Style tab: Toggle Icon
+	 */
+	protected function register_style_toggle_icon_controls() {
 		$this->start_controls_section(
 			'section_toggle_icon_style',
 			[

@@ -88,7 +88,6 @@ class Business_Hours extends Powerpack_Widget {
 	 * @access protected
 	 */
 	protected function register_controls() {
-
 		/* Content Tab */
 		$this->register_content_business_hours_controls();
 		$this->register_content_help_docs_controls();
